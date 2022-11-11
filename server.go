@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"log"
 	"net/http"
+	"os"
 )
 
 type Product struct {
@@ -14,12 +15,21 @@ type Product struct {
 	Calories    int     `json:"calories"`
 }
 
+func getHostName() string {
+	hostname, err := os.Hostname()
+	if err != nil {
+		fmt.Println(err)
+	}
+	return hostname
+}
+
 func health(w http.ResponseWriter, req *http.Request) {
 	w.Header().Set("Access-Control-Allow-Origin", "*")
 	w.Header().Set("Content-Type", "application/json")
 	w.Header().Set("Access-Control-Allow-Methods", "GET")
 	resp := make(map[string]string)
 	resp["status"] = "Healthy"
+	resp["host"] = getHostName()
 	jsonResp, err := json.Marshal(resp)
 	if err != nil {
 		log.Fatalf("Error happened in JSON marshal. Err: %s", err)
@@ -70,11 +80,21 @@ func menu(w http.ResponseWriter, req *http.Request) {
 
 func main() {
 	host := "0.0.0.0"
-	port := "8080"
+	port := "80"
+	if os.Getenv("HOST") != "" {
+		host = os.Getenv("HOST")
+	}
+	if os.Getenv("PORT") != "" {
+		port = os.Getenv("PORT")
+	}
+
 	http.HandleFunc("/health", health)
 	http.HandleFunc("/sa/menu", menu)
 	http.HandleFunc("/us/menu", menu)
 	http.HandleFunc("/fatal", fatal)
 	fmt.Println("Listening on http://" + host + ":" + port)
-	http.ListenAndServe(host+":"+port, nil)
+	err := http.ListenAndServe(host+":"+port, nil)
+	if err != nil {
+		log.Fatalf("Error starting the web server. Err: %s", err)
+	}
 }
