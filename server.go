@@ -27,6 +27,7 @@ func health(w http.ResponseWriter, req *http.Request) {
 	w.Header().Set("Access-Control-Allow-Origin", "*")
 	w.Header().Set("Content-Type", "application/json")
 	w.Header().Set("Access-Control-Allow-Methods", "GET")
+	w.Header().Set("x-COMING_FROM_HOST", getHostName())
 	resp := make(map[string]string)
 	resp["status"] = "Healthy"
 	resp["host"] = getHostName()
@@ -42,8 +43,10 @@ func fatal(w http.ResponseWriter, req *http.Request) {
 	w.Header().Set("Access-Control-Allow-Origin", "*")
 	w.Header().Set("Content-Type", "application/json")
 	w.Header().Set("Access-Control-Allow-Methods", "GET")
+	w.Header().Set("x-COMING_FROM_HOST", getHostName())
 	resp := make(map[string]string)
 	resp["status"] = "aborted"
+	resp["host"] = getHostName()
 	jsonResp, err := json.Marshal(resp)
 	if err != nil {
 		log.Fatalf("Error happened in JSON marshal. Err: %s", err)
@@ -75,6 +78,7 @@ func menu(w http.ResponseWriter, req *http.Request) {
 	w.Header().Set("Access-Control-Allow-Methods", "GET")
 	w.Header().Set("Access-Control-Allow-Headers",
 		"Accept, Content-Type, Content-Length, Accept-Encoding, X-CSRF-Token, Authorization")
+	w.Header().Set("x-COMING_FROM_HOST", getHostName())
 	fmt.Fprintf(w, string(productsJson))
 }
 

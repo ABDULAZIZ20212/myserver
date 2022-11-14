@@ -11,11 +11,11 @@ docker run -dt -p 80:80 bakery-server-image
 
 ```
 ## Windows
-env GOOS=windows GOARCH=amd64 go build -v -o ./bin/server_windows-1.1.exe
+env GOOS=windows GOARCH=amd64 go build -v -o ./bin/server_windows-1.2.exe
 ## Linux
-env GOOS=linux GOARCH=amd64 go build -v -o ./bin/server_linux-1.1
+env GOOS=linux GOARCH=amd64 go build -v -o ./bin/server_linux-1.2
 ## macos
-env GOOS=darwin GOARCH=amd64 go build -v -o ./bin/server_macos-1.1
+env GOOS=darwin GOARCH=amd64 go build -v -o ./bin/server_macos-1.2
 ```
 
 
@@ -30,21 +30,21 @@ export PORT=8080
 
 #### Linux
 
-Run the binary file at `bin/server_linux-1.1`
+Run the binary file at `bin/server_linux-1.2`
 
 ```
 cd bin
-chmod +x server_linux-1.1
-./server_linux-1.1
+chmod +x server_linux-1.2
+./server_linux-1.2
 ```
 
 #### Windows
 
-Run the executable file at `bin/server_windows-1.1.exe`
+Run the executable file at `bin/server_windows-1.2.exe`
 
 #### macOS
 
-Run the binary file at `bin/server_macos-1.1`
+Run the binary file at `bin/server_macos-1.2`
 
 
 ### Using the API
@@ -54,7 +54,7 @@ The API has the following endpoints:
 ##### /health
 
 ```bash
-curl curl http://localhost:80/health
+curl -i http://localhost:80/health
 ```
 
 ```
@@ -65,7 +65,7 @@ curl curl http://localhost:80/health
 ##### /sa/menu
 
 ```bash
-curl curl http://localhost:80/sa/menu
+curl -i http://localhost:80/sa/menu
 ```
 
 ```
@@ -76,7 +76,7 @@ curl curl http://localhost:80/sa/menu
 ##### /us/menu
 
 ```bash
-curl curl http://localhost:80/us/menu
+curl -i http://localhost:80/us/menu
 ```
 
 ```
@@ -87,7 +87,7 @@ curl curl http://localhost:80/us/menu
 ##### /fatal
 
 ```bash
-curl curl http://localhost:80/fatal
+curl -i http://localhost:80/fatal
 ```
 
 This will kill the server process.
