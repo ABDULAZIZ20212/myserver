@@ -29,8 +29,22 @@ func health(w http.ResponseWriter, req *http.Request) {
 	w.Header().Set("Access-Control-Allow-Methods", "GET")
 	w.Header().Set("x-COMING_FROM_HOST", getHostName())
 	resp := make(map[string]string)
-	resp["status"] = "Healthyy"
+	resp["status"] = "Healthy-abdulaziz-change"
 	resp["host"] = getHostName()
+	jsonResp, err := json.Marshal(resp)
+	if err != nil {
+		log.Fatalf("Error happened in JSON marshal. Err: %s", err)
+	}
+	fmt.Fprintf(w, string(jsonResp))
+}
+func about(w http.ResponseWriter, req *http.Request) {
+	w.Header().Set("Access-Control-Allow-Origin", "*")
+	w.Header().Set("Content-Type", "application/json")
+	w.Header().Set("Access-Control-Allow-Methods", "GET")
+	w.Header().Set("x-COMING_FROM_HOST", getHostName())
+	resp := make(map[string]string)
+	resp["name"] = "abdulaziz"
+	resp["course"] = "CPIT-632"
 	jsonResp, err := json.Marshal(resp)
 	if err != nil {
 		log.Fatalf("Error happened in JSON marshal. Err: %s", err)
@@ -39,7 +53,7 @@ func health(w http.ResponseWriter, req *http.Request) {
 }
 
 func fatal(w http.ResponseWriter, req *http.Request) {
-	w.WriteHeader(http.StatusInternalServerError)
+// 	w.WriteHeader(http.StatusInternalServerError)
 	w.Header().Set("Access-Control-Allow-Origin", "*")
 	w.Header().Set("Content-Type", "application/json")
 	w.Header().Set("Access-Control-Allow-Methods", "GET")
@@ -93,6 +107,7 @@ func main() {
 	}
 
 	http.HandleFunc("/health", health)
+	http.HandleFunc("/about", about)
 	http.HandleFunc("/sa/menu", menu)
 	http.HandleFunc("/us/menu", menu)
 	http.HandleFunc("/fatal", fatal)
