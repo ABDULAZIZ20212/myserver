@@ -29,7 +29,7 @@ func health(w http.ResponseWriter, req *http.Request) {
 	w.Header().Set("Access-Control-Allow-Methods", "GET")
 	w.Header().Set("x-COMING_FROM_HOST", getHostName())
 	resp := make(map[string]string)
-	resp["status"] = "Healthy"
+	resp["status"] = "Healthyy"
 	resp["host"] = getHostName()
 	jsonResp, err := json.Marshal(resp)
 	if err != nil {
